@@ -10,12 +10,12 @@ import {
   NavItem,
 } from "reactstrap";
 
-const NavBar = () => {
+const NavBar = ({ token, setToken }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   let navigate = useNavigate();
 
   const logOut = () => {
-    localStorage.removeItem("token");
+    setToken(null);
     navigate("/");
   };
 
@@ -37,7 +37,7 @@ const NavBar = () => {
           <NavItem>
             <Link to="/home">Home</Link>
           </NavItem>
-          {localStorage.getItem("token") && (
+          {token && (
             <NavItem>
               <Button color="warning" onClick={() => logOut()}>
                 Log Out

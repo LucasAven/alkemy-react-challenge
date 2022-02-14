@@ -2,38 +2,28 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Login from "./Login";
 import Home from "./Home";
-import RequireAuth from "./components/RequireAuth";
 import NavBar from "./components/NavBar";
-import { useState } from "react";
+import useToken from "./hooks/useToken";
 
 function App() {
-  const [token, setToken] = useState();
+  const { token, setToken } = useToken();
+
+  if (!token) {
+    return (
+      <>
+        <h1>Alkemy React Challenge</h1>
+        <Login token={token} setToken={setToken} />
+      </>
+    );
+  }
+
   return (
-    <>
-      <BrowserRouter>
-        <NavBar />
-        <Routes>
-          <Route
-            path="/"
-            element={
-              localStorage.getItem("token") ? (
-                <Home />
-              ) : (
-                <Login setToken={setToken} />
-              )
-            }
-          />
-          <Route
-            path="/home"
-            element={
-              <RequireAuth>
-                <Home />
-              </RequireAuth>
-            }
-          />
-        </Routes>
-      </BrowserRouter>
-    </>
+    <BrowserRouter>
+      <NavBar token={token} setToken={setToken} />
+      <Routes>
+        <Route path="/" element={<Home />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

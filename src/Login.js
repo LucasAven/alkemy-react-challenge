@@ -1,7 +1,6 @@
 import axios from "axios";
 import swal from "sweetalert";
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
 import {
   Alert,
   Button,
@@ -18,28 +17,14 @@ const Login = ({ setToken }) => {
   const [password, setPassword] = useState("");
   const [areEmpty, setAreEmpty] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { state } = useLocation();
-  let navigate = useNavigate();
 
   const validateInputs = async (e) => {
     e.preventDefault();
     setAreEmpty(email === "" || password === "");
-    if ((email === "" || password === "") === false) {
+    if (!(email === "" || password === "")) {
       handleLogin();
     }
   };
-
-  // useEffect(() => {
-  //   let unmounted = false;
-  //   if (areEmpty === false) {
-  //     handleLogin();
-  //     if (!unmounted) {
-  //       setLoading(false);
-  //       setAreEmpty(null);
-  //     }
-  //   }
-  //   return () => (unmounted = true);
-  // }, [areEmpty]);
 
   const handleLogin = () => {
     setLoading(true);
@@ -51,15 +36,16 @@ const Login = ({ setToken }) => {
       .then(({ data }) => {
         swal("Hi!", "Successful Login!", "success");
         setToken(data.token);
-        // localStorage.setItem("token", data.token);
-        // navigate(state?.path || "/home");
       })
-      .catch((err) => swal("Error", "Incorrect credentials!", "error"));
+      .catch(() => {
+        swal("Error", "Incorrect credentials!", "error");
+        setLoading(false);
+      });
   };
 
   return (
     <Container className="section-space">
-      <h1>Login</h1>
+      <h2>Login</h2>
       <Container className="p-sm-5">
         <Form onSubmit={(e) => validateInputs(e)}>
           <FormGroup floating>
