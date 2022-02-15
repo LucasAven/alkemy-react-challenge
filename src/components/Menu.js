@@ -41,6 +41,7 @@ const Menu = () => {
             <MenuItem
               key={index}
               id={menuItem}
+              eliminable={true}
               onDetail={handleModal}
               onDelete={handleDelete}
             />

@@ -5,7 +5,6 @@ import {
   Collapse,
   Nav,
   Navbar,
-  NavbarBrand,
   NavbarToggler,
   NavItem,
 } from "reactstrap";
@@ -27,7 +26,6 @@ const NavBar = ({ token, setToken }) => {
       expand="lg"
       light
     >
-      <NavbarBrand href="/">reactstrap</NavbarBrand>
       <NavbarToggler
         className="ms-auto"
         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -35,7 +33,7 @@ const NavBar = ({ token, setToken }) => {
       <Collapse navbar isOpen={isCollapsed}>
         <Nav className="ms-auto align-items-center gap-3" navbar>
           <NavItem>
-            <Link to="/home">Home</Link>
+            <Link to="/">Home</Link>
           </NavItem>
           {token && (
             <NavItem>

@@ -10,7 +10,7 @@ import {
 import useFetch from "../hooks/useFetch";
 import PropTypes from "prop-types";
 
-const MenuItem = ({ id, eliminable = true, onDetail, onDelete }) => {
+const MenuItem = ({ id, eliminable, onDetail, onDelete }) => {
   const [menuItem, error] = useFetch(id);
 
   if (error) {
@@ -22,16 +22,18 @@ const MenuItem = ({ id, eliminable = true, onDetail, onDelete }) => {
       {menuItem ? (
         <Card className="rounded col-12 col-md-5 pt-3">
           <CardImg alt={menuItem.title} src={menuItem.image} top width="100%" />
-          <CardBody>
-            <CardTitle tag="h5">{menuItem.title}</CardTitle>
-            <CardSubtitle className="mb-2 text-muted" tag="h6">
-              {menuItem.vegan ? "Vegan" : "No Vegan"}
-            </CardSubtitle>
-            <CardText
-              dangerouslySetInnerHTML={{
-                __html: menuItem.summary.split(".")[0] + ".",
-              }}
-            />
+          <CardBody className="d-flex flex-column justify-content-between gap-3">
+            <div>
+              <CardTitle tag="h5">{menuItem.title}</CardTitle>
+              <CardSubtitle className="mb-2 text-muted" tag="h6">
+                {menuItem.vegan ? "Vegan" : "No Vegan"}
+              </CardSubtitle>
+              <CardText
+                dangerouslySetInnerHTML={{
+                  __html: menuItem.summary.split(".")[0] + ".",
+                }}
+              />
+            </div>
             <div className="d-flex justify-content-evenly">
               <Button
                 className="bg-transparent border-2 border-primary text-primary fw-bold"
@@ -67,5 +69,7 @@ const MenuItem = ({ id, eliminable = true, onDetail, onDelete }) => {
 MenuItem.propTypes = {
   id: PropTypes.number.isRequired,
   eliminable: PropTypes.bool,
+  onDetail: PropTypes.func.isRequired,
+  onDelete: PropTypes.func,
 };
 export default MenuItem;
