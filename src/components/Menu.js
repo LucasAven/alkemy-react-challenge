@@ -3,19 +3,31 @@ import { Container } from "reactstrap";
 import swal from "sweetalert";
 import MenuItem from "../components/MenuItem";
 import MenuItemDetail from "./MenuItemDetail";
+import ValuesList from "./ValuesList";
 
 const Menu = () => {
-  const [menuItems, setMenuItems] = useState([176430, 176431, 176432, 176433]);
+  const [menuItems, setMenuItems] = useState([176430, 176431]);
+
   const [modal, setModal] = useState(false);
+  const [modalData, setModalData] = useState({});
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
-  const [data, setData] = useState({});
+
+  const [precioTotal, setPrecioTotal] = useState(0.0);
+  const [tiempoTotal, setTiempoTotal] = useState(0.0);
+  const [healthScoreTotal, setHealthScoreTotal] = useState(0.0);
 
   const handleModal = (title, image, data) => {
     setTitle(title);
     setImage(image);
-    setData(data);
+    setModalData(data);
     setModal(true);
+  };
+
+  const handleGeneralValues = ({ precio, tiempo, healthScore }) => {
+    setPrecioTotal((precioTota) => precioTota + precio);
+    setTiempoTotal((tiempoTota) => tiempoTota + tiempo);
+    setHealthScoreTotal((healthScoreTota) => healthScoreTota + healthScore);
   };
 
   const handleDelete = (id) => {
@@ -27,8 +39,12 @@ const Menu = () => {
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
-        swal("Plato eliminado!", "success");
-        setMenuItems(menuItems.filter((menuId) => menuId !== id));
+        swal("Plato eliminado!", { icon: "success" });
+        const newMenuItems = menuItems.filter((menuId) => menuId !== id);
+        setMenuItems(newMenuItems);
+        setPrecioTotal(0);
+        setTiempoTotal(0);
+        setHealthScoreTotal(0);
       }
     });
   };
@@ -44,15 +60,26 @@ const Menu = () => {
               eliminable={true}
               onDetail={handleModal}
               onDelete={handleDelete}
+              changeValues={handleGeneralValues}
             />
           ))}
+        </div>
+        <div className="bg-warning">
+          <ValuesList
+            promedio={true}
+            data={{
+              precio: precioTotal,
+              tiempo: tiempoTotal / menuItems.length,
+              healthScore: healthScoreTotal / menuItems.length,
+            }}
+          />
         </div>
       </Container>
       {modal && (
         <MenuItemDetail
           title={title}
           image={image}
-          data={data}
+          data={modalData}
           setModal={setModal}
         />
       )}

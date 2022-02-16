@@ -9,17 +9,26 @@ import {
 } from "reactstrap";
 import useFetch from "../hooks/useFetch";
 import PropTypes from "prop-types";
+import { useEffect } from "react";
 
-const MenuItem = ({ id, eliminable, onDetail, onDelete }) => {
+const MenuItem = ({ id, eliminable, onDetail, onDelete, changeValues }) => {
   const [menuItem, error] = useFetch(id);
 
-  if (error) {
-    return <span className="text-danger">Problem getting menu item info.</span>;
-  }
-
+  useEffect(() => {
+    if (menuItem) {
+      const data = {
+        precio: menuItem.pricePerServing,
+        tiempo: menuItem.readyInMinutes,
+        healthScore: menuItem.healthScore,
+      };
+      changeValues(data);
+    }
+  }, [menuItem]);
   return (
     <>
-      {menuItem ? (
+      {error ? (
+        <span className="text-danger">Problem getting menu item info.</span>
+      ) : menuItem ? (
         <Card className="rounded col-12 col-md-5 pt-3">
           <CardImg alt={menuItem.title} src={menuItem.image} top width="100%" />
           <CardBody className="d-flex flex-column justify-content-between gap-3">

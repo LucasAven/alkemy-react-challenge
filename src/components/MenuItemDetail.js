@@ -1,11 +1,5 @@
-import {
-  Button,
-  List,
-  Modal,
-  ModalBody,
-  ModalFooter,
-  ModalHeader,
-} from "reactstrap";
+import { Button, Modal, ModalBody, ModalFooter, ModalHeader } from "reactstrap";
+import ValuesList from "./ValuesList";
 
 const MenuItemDetail = ({ title, image, data, setModal }) => {
   return (
@@ -16,11 +10,7 @@ const MenuItemDetail = ({ title, image, data, setModal }) => {
           <img alt={title} src={image} width="100%" />
         </div>
         <div className="w-100 w-md-50">
-          <List>
-            <li>Precio: {data.precio}</li>
-            <li>Tiempo: {data.tiempo}</li>
-            <li>Health Score: {data.healthScore}</li>
-          </List>
+          <ValuesList promedio={false} data={data} />
         </div>
       </ModalBody>
       <ModalFooter>
