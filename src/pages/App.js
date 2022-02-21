@@ -3,6 +3,7 @@ import "../styles/App.css";
 import Login from "./Login";
 import Home from "./Home";
 import NavBar from "../components/NavBar";
+import AddItem from "./AddItem";
 import useToken from "../hooks/useToken";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
       <NavBar token={token} setToken={setToken} />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/add-item" element={<AddItem />} />
       </Routes>
     </BrowserRouter>
   );

@@ -7,76 +7,66 @@ import {
   CardText,
   CardTitle,
 } from "reactstrap";
-import useFetch from "../hooks/useFetch";
 import PropTypes from "prop-types";
-import { useEffect } from "react";
 
-const MenuItem = ({ id, eliminable, onDetail, onDelete, changeValues }) => {
-  const [menuItem, error] = useFetch(id);
-
-  useEffect(() => {
-    if (menuItem) {
-      const data = {
-        precio: menuItem.pricePerServing,
-        tiempo: menuItem.readyInMinutes,
-        healthScore: menuItem.healthScore,
-      };
-      changeValues(data);
-    }
-  }, [menuItem]);
+const MenuItem = ({
+  data,
+  eliminable = true,
+  agregable = false,
+  onDetail,
+  onDelete,
+  onAdd,
+}) => {
   return (
     <>
-      {error ? (
-        <span className="text-danger">Problem getting menu item info.</span>
-      ) : menuItem ? (
-        <Card className="rounded col-12 col-md-5 pt-3">
-          <CardImg alt={menuItem.title} src={menuItem.image} top width="100%" />
-          <CardBody className="d-flex flex-column justify-content-between gap-3">
-            <div>
-              <CardTitle tag="h5">{menuItem.title}</CardTitle>
-              <CardSubtitle className="mb-2 text-muted" tag="h6">
-                {menuItem.vegan ? "Vegan" : "No Vegan"}
-              </CardSubtitle>
-              <CardText
-                dangerouslySetInnerHTML={{
-                  __html: menuItem.summary.split(".")[0] + ".",
-                }}
-              />
-            </div>
-            <div className="d-flex justify-content-evenly">
+      <Card className="rounded col-12 col-md-5 pt-3">
+        <CardImg alt={data.title} src={data.image} top width="100%" />
+        <CardBody className="d-flex flex-column justify-content-between gap-3">
+          <div>
+            <CardTitle tag="h5">{data.title}</CardTitle>
+            <CardSubtitle className="mb-2 text-muted" tag="h6">
+              {data.vegan ? "Vegan" : "No Vegan"}
+            </CardSubtitle>
+            <CardText
+              dangerouslySetInnerHTML={{
+                __html: data.summary.split(".")[0] + ".",
+              }}
+            />
+          </div>
+          <div className="d-flex flex-column flex-lg-row gap-3 justify-content-evenly">
+            <Button
+              className="bg-transparent border-2 border-primary text-primary fw-bold"
+              onClick={() => onDetail(data.id)}
+            >
+              VER PLATO
+            </Button>
+            {agregable && (
               <Button
-                className="bg-transparent border-2 border-primary text-primary fw-bold"
-                onClick={() =>
-                  onDetail(menuItem.title, menuItem.image, {
-                    precio: menuItem.pricePerServing,
-                    tiempo: menuItem.readyInMinutes,
-                    healthScore: menuItem.healthScore,
-                  })
-                }
+                color="primary"
+                className="fw-bold"
+                onClick={() => onAdd(data)}
               >
-                VER PLATO
+                AGREGAR PLATO
               </Button>
-              {eliminable && (
-                <Button
-                  color="primary"
-                  className="fw-bold"
-                  onClick={() => onDelete(id)}
-                >
-                  ELIMINAR
-                </Button>
-              )}
-            </div>
-          </CardBody>
-        </Card>
-      ) : (
-        <span>Cargando...</span>
-      )}
+            )}
+            {eliminable && (
+              <Button
+                color="primary"
+                className="fw-bold"
+                onClick={() => onDelete(data.id)}
+              >
+                ELIMINAR
+              </Button>
+            )}
+          </div>
+        </CardBody>
+      </Card>
     </>
   );
 };
 
 MenuItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  data: PropTypes.object.isRequired,
   eliminable: PropTypes.bool,
   onDetail: PropTypes.func.isRequired,
   onDelete: PropTypes.func,

@@ -1,33 +1,32 @@
 import { useState } from "react";
-import { Container } from "reactstrap";
+import { useNavigate } from "react-router-dom";
+import { Button, Container } from "reactstrap";
 import swal from "sweetalert";
-import MenuItem from "../components/MenuItem";
-import MenuItemDetail from "./MenuItemDetail";
+import MenuItems from "./MenuItems";
 import ValuesList from "./ValuesList";
 
 const Menu = () => {
-  const [menuItems, setMenuItems] = useState([176430, 176431]);
+  const [items, setItems] = useState(
+    JSON.parse(localStorage.getItem("itemsData"))
+  );
+  let navigate = useNavigate();
 
-  const [modal, setModal] = useState(false);
-  const [modalData, setModalData] = useState({});
-  const [title, setTitle] = useState("");
-  const [image, setImage] = useState("");
-
-  const [precioTotal, setPrecioTotal] = useState(0.0);
-  const [tiempoTotal, setTiempoTotal] = useState(0.0);
-  const [healthScoreTotal, setHealthScoreTotal] = useState(0.0);
-
-  const handleModal = (title, image, data) => {
-    setTitle(title);
-    setImage(image);
-    setModalData(data);
-    setModal(true);
-  };
-
-  const handleGeneralValues = ({ precio, tiempo, healthScore }) => {
-    setPrecioTotal((precioTota) => precioTota + precio);
-    setTiempoTotal((tiempoTota) => tiempoTota + tiempo);
-    setHealthScoreTotal((healthScoreTota) => healthScoreTota + healthScore);
+  const data = items?.length > 0 && {
+    precio: items
+      .map((item) => item.pricePerServing)
+      .reduce((preTot, pre) => (preTot += pre))
+      .toFixed(2),
+    tiempo:
+      items
+        .map((item) => item.readyInMinutes)
+        .reduce((tiempTot, tiemp) => (tiempTot += tiemp)) / items.length,
+    healthScore: Number(
+      (
+        items
+          .map((item) => item.healthScore)
+          .reduce((healthTot, health) => (healthTot += health)) / items.length
+      ).toFixed(2)
+    ),
   };
 
   const handleDelete = (id) => {
@@ -40,11 +39,14 @@ const Menu = () => {
     }).then((willDelete) => {
       if (willDelete) {
         swal("Plato eliminado!", { icon: "success" });
-        const newMenuItems = menuItems.filter((menuId) => menuId !== id);
-        setMenuItems(newMenuItems);
-        setPrecioTotal(0);
-        setTiempoTotal(0);
-        setHealthScoreTotal(0);
+        const itemsDataNew = items.filter((item) => item.id !== id);
+        if (itemsDataNew.length !== 0) {
+          localStorage.setItem("itemsData", JSON.stringify(itemsDataNew));
+          setItems(itemsDataNew);
+        } else {
+          localStorage.removeItem("itemsData");
+          setItems(null);
+        }
       }
     });
   };
@@ -52,37 +54,36 @@ const Menu = () => {
   return (
     <>
       <Container tag="main" className="section-space">
-        <div className="row gap-3 justify-content-center">
-          {menuItems.map((menuItem, index) => (
-            <MenuItem
-              key={index}
-              id={menuItem}
-              eliminable={true}
-              onDetail={handleModal}
-              onDelete={handleDelete}
-              changeValues={handleGeneralValues}
-            />
-          ))}
-        </div>
-        <div className="bg-warning">
-          <ValuesList
-            promedio={true}
-            data={{
-              precio: precioTotal,
-              tiempo: tiempoTotal / menuItems.length,
-              healthScore: healthScoreTotal / menuItems.length,
-            }}
-          />
-        </div>
+        {!!items === false ? (
+          <div className="text-center">
+            <p className="fs-4">No hay Items! Agrega alguno.</p>
+            <Button
+              color="primary"
+              value="Agregar Plato"
+              onClick={() => navigate("/add-item")}
+            >
+              Agregar Platos
+            </Button>
+          </div>
+        ) : (
+          <>
+            <div className="row gap-3 justify-content-center">
+              {items ? (
+                <MenuItems items={items} onDelete={handleDelete} />
+              ) : (
+                <span>Cargando Item...</span>
+              )}
+            </div>
+            <div className="bg-warning">
+              {items ? (
+                <ValuesList promedio={true} data={data} />
+              ) : (
+                <span>Cargando...</span>
+              )}
+            </div>
+          </>
+        )}
       </Container>
-      {modal && (
-        <MenuItemDetail
-          title={title}
-          image={image}
-          data={modalData}
-          setModal={setModal}
-        />
-      )}
     </>
   );
 };

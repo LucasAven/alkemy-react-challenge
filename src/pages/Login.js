@@ -71,7 +71,7 @@ const Login = ({ setToken }) => {
             <Label for="examplePassword">Password</Label>
           </FormGroup>
           <Button disabled={loading}>
-            {loading ? <Spinner color="info" size="sm" /> : "Submit"}
+            {loading ? <Spinner color="info" size="sm" /> : "Enviar"}
           </Button>
         </Form>
         {areEmpty && (

@@ -35,6 +35,9 @@ const NavBar = ({ token, setToken }) => {
           <NavItem>
             <Link to="/">Home</Link>
           </NavItem>
+          <NavItem>
+            <Link to="/add-item">Agregar Items</Link>
+          </NavItem>
           {token && (
             <NavItem>
               <Button color="warning" onClick={() => logOut()}>
