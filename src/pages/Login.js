@@ -44,36 +44,41 @@ const Login = ({ setToken }) => {
   };
 
   return (
-    <Container className="section-space">
-      <h2>Login</h2>
-      <Container className="p-sm-5">
-        <Form onSubmit={(e) => validateInputs(e)}>
-          <FormGroup floating>
-            <Input
-              id="exampleEmail"
-              name="email"
-              placeholder="Email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Label for="exampleEmail">Email</Label>
-          </FormGroup>
-          <FormGroup floating>
-            <Input
-              id="examplePassword"
-              name="password"
-              placeholder="Password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Label for="examplePassword">Password</Label>
-          </FormGroup>
-          <Button color="primary" disabled={loading}>
-            {loading ? <Spinner color="info" size="sm" /> : "Enviar"}
-          </Button>
-        </Form>
+    <div className="login-wrapper">
+      {/* <Container className="section-space"> */}
+      <div className="login-img" />
+      {/* <Container className="p-sm-5"> */}
+      <Form className="login-form" onSubmit={(e) => validateInputs(e)}>
+        <h2 className="text-center pb-4">Login</h2>
+        <FormGroup floating>
+          <Input
+            id="email"
+            name="email"
+            placeholder="Email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Label for="email">Email</Label>
+        </FormGroup>
+        <FormGroup floating>
+          <Input
+            id="password"
+            name="password"
+            placeholder="Password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Label for="password">Password</Label>
+        </FormGroup>
+        <Button
+          color="primary"
+          className="login-form-btn fw-bold"
+          disabled={loading}
+        >
+          {loading ? <Spinner color="info" size="sm" /> : "Enviar"}
+        </Button>
         {areEmpty && (
           <Alert
             className="mt-4"
@@ -83,8 +88,10 @@ const Login = ({ setToken }) => {
             Please do not leave empty any field.
           </Alert>
         )}
-      </Container>
-    </Container>
+      </Form>
+      {/* </Container> */}
+      {/* </Container> */}
+    </div>
   );
 };
 

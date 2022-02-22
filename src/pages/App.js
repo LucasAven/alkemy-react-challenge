@@ -16,6 +16,7 @@ function App() {
   const { token, setToken } = useToken();
 
   if (!token) {
+    document.getElementById("root").classList.remove("nav-space");
     return (
       <Suspense
         fallback={
@@ -24,11 +25,12 @@ function App() {
           </div>
         }
       >
-        <h1 className="text-center">Alkemy React Challenge</h1>
         <Login token={token} setToken={setToken} />
       </Suspense>
     );
   }
+
+  document.getElementById("root").classList.add("nav-space");
 
   return (
     <BrowserRouter>
