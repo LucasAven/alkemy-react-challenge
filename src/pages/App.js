@@ -5,6 +5,12 @@ import Home from "./Home";
 import NavBar from "../components/NavBar";
 import AddItem from "./AddItem";
 import useToken from "../hooks/useToken";
+import NotFound from "./NotFound";
+
+// TODO: HACER PAGINA 404
+// TODO: EMBELLECER UI
+// TODO: LEER SOBRE LAZY LOADING (LA SECCION DE USO EN RUTAS: https://es.reactjs.org/docs/code-splitting.html#route-based-code-splitting)
+// TODO: AGREGAR TESTS UNITARIOS
 
 function App() {
   const { token, setToken } = useToken();
@@ -24,6 +30,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/add-item" element={<AddItem />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

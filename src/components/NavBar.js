@@ -5,6 +5,7 @@ import {
   Collapse,
   Nav,
   Navbar,
+  NavbarBrand,
   NavbarToggler,
   NavItem,
 } from "reactstrap";
@@ -26,6 +27,7 @@ const NavBar = ({ token, setToken }) => {
       expand="lg"
       light
     >
+      <NavbarBrand>Menu App</NavbarBrand>
       <NavbarToggler
         className="ms-auto"
         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -40,7 +42,7 @@ const NavBar = ({ token, setToken }) => {
           </NavItem>
           {token && (
             <NavItem>
-              <Button color="warning" onClick={() => logOut()}>
+              <Button className="secondary-col" onClick={() => logOut()}>
                 Log Out
               </Button>
             </NavItem>
