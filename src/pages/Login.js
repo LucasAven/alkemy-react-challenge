@@ -4,7 +4,6 @@ import { useState } from "react";
 import {
   Alert,
   Button,
-  Container,
   Form,
   FormGroup,
   Input,
@@ -45,9 +44,7 @@ const Login = ({ setToken }) => {
 
   return (
     <div className="login-wrapper">
-      {/* <Container className="section-space"> */}
       <div className="login-img" />
-      {/* <Container className="p-sm-5"> */}
       <Form className="login-form" onSubmit={(e) => validateInputs(e)}>
         <h2 className="text-center pb-4">Login</h2>
         <FormGroup floating>
@@ -89,8 +86,6 @@ const Login = ({ setToken }) => {
           </Alert>
         )}
       </Form>
-      {/* </Container> */}
-      {/* </Container> */}
     </div>
   );
 };
