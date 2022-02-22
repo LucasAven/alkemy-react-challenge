@@ -7,7 +7,6 @@ import { lazy, Suspense } from "react";
 import { Spinner } from "reactstrap";
 
 // TODO: EMBELLECER UI
-// TODO: LEER SOBRE LAZY LOADING (LA SECCION DE USO EN RUTAS: https://es.reactjs.org/docs/code-splitting.html#route-based-code-splitting)
 
 const Home = lazy(() => import("./Home"));
 const AddItem = lazy(() => import("./AddItem"));
