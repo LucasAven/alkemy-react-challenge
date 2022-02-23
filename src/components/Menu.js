@@ -4,6 +4,7 @@ import { Button, Container } from "reactstrap";
 import swal from "sweetalert";
 import MenuItems from "./MenuItems";
 import ValuesList from "./ValuesList";
+import EmptyPana from "../images/Empty-pana.svg";
 
 const Menu = () => {
   const [items, setItems] = useState(
@@ -16,10 +17,11 @@ const Menu = () => {
       .map((item) => item.pricePerServing)
       .reduce((preTot, pre) => (preTot += pre))
       .toFixed(2),
-    tiempo:
+    tiempo: (
       items
         .map((item) => item.readyInMinutes)
-        .reduce((tiempTot, tiemp) => (tiempTot += tiemp)) / items.length,
+        .reduce((tiempTot, tiemp) => (tiempTot += tiemp)) / items.length
+    ).toFixed(2),
     healthScore: Number(
       (
         items
@@ -34,7 +36,7 @@ const Menu = () => {
       title: "Eliminar Plato",
       text: "¿Está seguro que quiere eliminar el plato?",
       icon: "warning",
-      buttons: true,
+      buttons: ["No", "Si"],
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
@@ -56,29 +58,37 @@ const Menu = () => {
       <Container tag="main" className="section-space">
         {!!items === false ? (
           <div className="text-center">
-            <p className="fs-4">No hay Items! Agrega alguno.</p>
+            <p className="fs-3">
+              No hay Items! <br /> Agrega alguno.
+            </p>
             <Button
-              color="primary"
+              className="primary-col d-block m-auto fs-4"
               value="Agregar Plato"
               onClick={() => navigate("/add-item")}
             >
               Agregar Platos
             </Button>
+            <img
+              src={EmptyPana}
+              alt=""
+              className="mt-5 opacity-75"
+              style={{ maxWidth: 400 + "px" }}
+            />
           </div>
         ) : (
           <>
+            <Container className="primary-col promedios-wrapper m-auto mb-3 rounded">
+              {items ? (
+                <ValuesList promedio={true} data={data} />
+              ) : (
+                <span>Cargando...</span>
+              )}
+            </Container>
             <div className="row gap-3 justify-content-center">
               {items ? (
                 <MenuItems items={items} onDelete={handleDelete} />
               ) : (
                 <span>Cargando Item...</span>
-              )}
-            </div>
-            <div className="bg-warning">
-              {items ? (
-                <ValuesList promedio={true} data={data} />
-              ) : (
-                <span>Cargando...</span>
               )}
             </div>
           </>

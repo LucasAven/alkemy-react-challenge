@@ -25,7 +25,7 @@ const MenuItem = ({
           <div>
             <CardTitle tag="h5">{data.title}</CardTitle>
             <CardSubtitle className="mb-2 text-muted" tag="h6">
-              {data.vegan ? "Vegan" : "No Vegan"}
+              {data.vegan ? "Vegano" : "No Vegano"}
             </CardSubtitle>
             <CardText
               dangerouslySetInnerHTML={{
@@ -35,15 +35,14 @@ const MenuItem = ({
           </div>
           <div className="d-flex flex-column flex-lg-row gap-3 justify-content-evenly">
             <Button
-              className="bg-transparent border-2 border-primary text-primary fw-bold"
+              className="btn-outline fw-bold"
               onClick={() => onDetail(data.id)}
             >
               VER PLATO
             </Button>
             {agregable && (
               <Button
-                color="primary"
-                className="fw-bold"
+                className="primary-col fw-bold"
                 onClick={() => onAdd(data)}
               >
                 AGREGAR PLATO
@@ -51,8 +50,7 @@ const MenuItem = ({
             )}
             {eliminable && (
               <Button
-                color="primary"
-                className="fw-bold"
+                className="primary-col fw-bold"
                 onClick={() => onDelete(data.id)}
               >
                 ELIMINAR

@@ -33,11 +33,11 @@ const Login = ({ setToken }) => {
         password: password,
       })
       .then(({ data }) => {
-        swal("Hi!", "Successful Login!", "success");
+        swal("Hola!", "Login Correcto!", "success");
         setToken(data.token);
       })
       .catch(() => {
-        swal("Error", "Incorrect credentials!", "error");
+        swal("Error", "Credenciales incorrectas!", "error");
         setLoading(false);
       });
   };
@@ -70,8 +70,7 @@ const Login = ({ setToken }) => {
           <Label for="password">Password</Label>
         </FormGroup>
         <Button
-          color="primary"
-          className="login-form-btn fw-bold"
+          className="login-form-btn primary-col fw-bold"
           disabled={loading}
         >
           {loading ? <Spinner color="info" size="sm" /> : "Enviar"}
@@ -82,7 +81,7 @@ const Login = ({ setToken }) => {
             color="danger"
             toggle={() => setAreEmpty(null)}
           >
-            Please do not leave empty any field.
+            Porfavor no deje ningún campo vacío.
           </Alert>
         )}
       </Form>

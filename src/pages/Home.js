@@ -1,12 +1,7 @@
 import Menu from "../components/Menu";
 
 const Home = () => {
-  return (
-    <>
-      <h1>Home</h1>
-      <Menu />
-    </>
-  );
+  return <Menu />;
 };
 
 export default Home;

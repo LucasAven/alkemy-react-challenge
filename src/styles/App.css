@@ -1,10 +1,12 @@
 :root {
-  --primary-col: #ff6f68;
-  --secondary-col: #ffa34f;
+  --primary-col: #ffa34f;
+  --bg-col: #ede5cf;
+  --bg-contrast-col: #f1dfac;
 }
 
 body {
   position: relative;
+  background-color: var(--bg-col);
 }
 
 * {
@@ -14,24 +16,53 @@ body {
   box-sizing: border-box;
 }
 
+#root {
+  min-height: calc(100vh - 72px);
+}
+
+.loader-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
 .nav-space {
   margin-top: 72px;
 }
 
-.main-col {
+.navbar {
+  background-color: var(--bg-contrast-col) !important;
+}
+
+.bg-col {
+  background-color: var(--bg-col);
+}
+
+.primary-col,
+.primary-col:active,
+.primary-col:hover,
+.primary-col:focus {
   background-color: var(--primary-col);
   border-color: var(--primary-col);
 }
-
-button .main-col :hover {
-  background-color: var(--primary-col);
-
-  border-color: var(--primary-col);
+.primary-col[type="button"]:hover,
+.primary-col[type="submit"]:hover {
+  --primary-col: #ffb169 !important;
 }
 
-.secondary-col {
-  background-color: var(--secondary-col);
-  border-color: var(--secondary-col);
+/* botones */
+.btn-outline {
+  background-color: transparent;
+  border: 2px solid var(--primary-col);
+  color: var(--primary-col);
+}
+
+.btn-outline:active,
+.btn-outline:hover,
+.btn-outline:focus {
+  background-color: var(--primary-col);
+  border-color: var(--primary-col);
+  color: #fff;
 }
 
 .section-space {
@@ -41,7 +72,6 @@ button .main-col :hover {
 /* Login */
 .login-wrapper {
   width: 100%;
-  background: #fff;
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
@@ -75,7 +105,6 @@ button .main-col :hover {
   width: 560px;
   min-height: 100vh;
   display: block;
-  background-color: #f7f7f7;
   padding: 173px 55px 55px 55px;
 }
 .login-form h2 {
@@ -83,15 +112,16 @@ button .main-col :hover {
   color: #333;
   margin: 0;
 }
+.login-form input {
+  border-radius: 15px;
+}
 
-#email,
-#password {
-  background-color: transparent;
+input.form-control {
+  background-color: #e7e7e7;
   transition: all 0.4s ease-in-out;
 }
-#email:focus-within,
-#password:focus-within {
-  background-color: #fff;
+input.form-control:focus-within {
+  background-color: #ddd;
 }
 
 .login-form-btn {
@@ -102,9 +132,6 @@ button .main-col :hover {
   width: 100%;
   height: 50px;
   border-radius: 10px;
-  background: #6675df;
-  border-color: #6675df;
-  font-size: 12px;
   color: #fff;
   line-height: 1.2;
   text-transform: uppercase;
@@ -113,8 +140,12 @@ button .main-col :hover {
 }
 
 .login-form-btn:hover {
-  background: #333;
-  border-color: #333;
+  --primary-col: #ffb169 !important;
+}
+
+/* Home */
+.card-body button {
+  letter-spacing: 1.5px;
 }
 
 /* 404 */
@@ -124,7 +155,7 @@ button .main-col :hover {
   position: absolute;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, 50%);
+  transform: translate(-50%, -50%);
 }
 .not-found-wrapper h1 {
   font-size: min(20vw, 86px);
@@ -140,6 +171,11 @@ button .main-col :hover {
 }
 
 /* Responsive */
+@media (min-width: 992px) {
+  .promedios-wrapper {
+    max-width: 700px;
+  }
+}
 @media (max-width: 992px) {
   .login-form {
     width: 50%;

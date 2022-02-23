@@ -8,6 +8,7 @@ import {
   NavbarBrand,
   NavbarToggler,
   NavItem,
+  NavLink,
 } from "reactstrap";
 
 const NavBar = ({ token, setToken }) => {
@@ -27,7 +28,7 @@ const NavBar = ({ token, setToken }) => {
       expand="lg"
       light
     >
-      <NavbarBrand>Menu App</NavbarBrand>
+      <NavbarBrand className="fw-bold">Menu App</NavbarBrand>
       <NavbarToggler
         className="ms-auto"
         onClick={() => setIsCollapsed(!isCollapsed)}
@@ -35,14 +36,18 @@ const NavBar = ({ token, setToken }) => {
       <Collapse navbar isOpen={isCollapsed}>
         <Nav className="ms-auto align-items-center gap-3" navbar>
           <NavItem>
-            <Link to="/">Home</Link>
+            <Link to="/" className="nav-link">
+              Home
+            </Link>
           </NavItem>
           <NavItem>
-            <Link to="/add-item">Agregar Items</Link>
+            <Link to="/add-item" className="nav-link">
+              Agregar Items
+            </Link>
           </NavItem>
           {token && (
             <NavItem>
-              <Button className="secondary-col" onClick={() => logOut()}>
+              <Button className="primary-col" onClick={() => logOut()}>
                 Log Out
               </Button>
             </NavItem>

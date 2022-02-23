@@ -20,8 +20,8 @@ const MenuItemDetail = ({ item, modal, setModal }) => {
         </div>
       </ModalBody>
       <ModalFooter>
-        <Button color="primary" onClick={() => setModal(!modal)}>
-          OK
+        <Button className="primary-col" onClick={() => setModal(!modal)}>
+          Aceptar
         </Button>
       </ModalFooter>
     </Modal>

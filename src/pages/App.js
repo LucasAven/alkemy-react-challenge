@@ -20,7 +20,7 @@ function App() {
     return (
       <Suspense
         fallback={
-          <div className="text-center">
+          <div className="text-center loader-center">
             <Spinner color="info" size="sm" /> Cargando...
           </div>
         }
@@ -37,7 +37,7 @@ function App() {
       <NavBar token={token} setToken={setToken} />
       <Suspense
         fallback={
-          <div className="text-center">
+          <div className="text-center loader-center">
             <Spinner color="info" size="sm" /> Cargando...
           </div>
         }

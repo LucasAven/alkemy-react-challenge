@@ -143,28 +143,37 @@ const AddItem = () => {
         }}
       >
         {({ errors, touched, isSubmitting }) => (
-          <Form className="d-flex justify-content-center gap-3">
-            <div className="d-flex flex-column gap-1">
-              <Field type="text" name="search" />
-              {touched.search && errors.search && (
-                <span className="text-danger fw-bold">{errors.search}</span>
-              )}
-            </div>
-            <Button
-              className="align-self-start"
-              color="primary"
-              type="submit"
-              disabled={isSubmitting}
-            >
-              Buscar
-            </Button>
-          </Form>
+          <>
+            <h2 className="text-center fs-3 mb-4">
+              Busque los platos que desee agregar a su menú!
+            </h2>
+            <Form className="d-flex justify-content-center gap-3">
+              <div className="d-flex flex-column gap-1">
+                <Field
+                  type="text"
+                  name="search"
+                  className="form-control"
+                  placeholder="pizza..."
+                />
+                {touched.search && errors.search && (
+                  <span className="text-danger fw-bold">{errors.search}</span>
+                )}
+              </div>
+              <Button
+                className="align-self-start primary-col"
+                type="submit"
+                disabled={isSubmitting}
+              >
+                Buscar
+              </Button>
+            </Form>
+          </>
         )}
       </Formik>
       <div className="row gap-3 justify-content-center mt-5">
         {error && (
           <span className="text-danger">
-            Problem getting items. {error.message}
+            Surgió un problema al obtener los platos: <br /> {error.message}
           </span>
         )}
         {!!error === false && items && (
@@ -178,13 +187,15 @@ const AddItem = () => {
       </div>
       {items?.length > 0 &&
         (reachMaxItems ? (
-          <div className="text-center d-block m-auto mt-3 text-primary fs-5">
+          <div
+            className="text-center primary-col d-block m-auto mt-3 fs-3 fw-bold py-2 promedios-wrapper"
+            style={{ color: "#fff" }}
+          >
             No hay más platos!
           </div>
         ) : (
           <Button
-            color="primary"
-            className="d-block m-auto mt-3"
+            className="d-block m-auto mt-3 fs-5 primary-col"
             onClick={() =>
               setShowingCount((oldValue) => (oldValue += itemsPerFetch))
             }
